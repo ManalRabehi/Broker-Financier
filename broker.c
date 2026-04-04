@@ -192,17 +192,17 @@ void cmd_vendre(const char *nom_produit, int quantite, char *response) {
         snprintf(response, BUFFER_SIZE, "ERREUR: La quantite doit etre positive.");
         return;
     }
-
+ 
     int idx = trouver_produit(nom_produit);
     if (idx == -1) {
         snprintf(response, BUFFER_SIZE, "ERREUR: Produit '%s' inconnu.", nom_produit);
         return;
     }
-
+ 
     /* calcul du montant que le broker doit payer */
     float montant = broker.produits[idx].prix * quantite;
-
-    /* vérification des fonds du broker */
+ 
+    /* [3.3] vérification des fonds du broker */
     if (broker.fonds < montant) {
         snprintf(response, BUFFER_SIZE,
             "ERREUR: Broker sans fonds suffisants. Fonds disponibles: %.2f$, "
@@ -211,15 +211,32 @@ void cmd_vendre(const char *nom_produit, int quantite, char *response) {
             montant);
         return;
     }
-
+ 
     /* mise à jour du stock et des fonds du broker */
     broker.produits[idx].quantite += quantite; /* le broker gagne des actions */
     broker.fonds -= montant;                   /* le broker perd de l'argent */
+ 
+    /* [3.4 OPTIONNEL] ajustement dynamique du prix */
+    /* -1% par tranche de 10 actions vendues (l'offre fait baisser les prix) */
+    float baisse = (quantite / 10) * 0.01f;
+    broker.produits[idx].prix *= (1.0f - baisse);
+    /* prix plancher : on ne descend pas en dessous de 1$ */
+    if (broker.produits[idx].prix < 1.0f)
+        broker.produits[idx].prix = 1.0f;
+ 
+    snprintf(response, BUFFER_SIZE,
+        "VENTE OK | %d actions %s vendues pour %.2f$ (%.2f$/action) | "
+        "Nouveau prix: %.2f$ | Stock broker: %d",
+        quantite,
+        nom_produit,
+        montant,
+        montant / quantite,
+        broker.produits[idx].prix,
+        broker.produits[idx].quantite);
+}
 
-/* ============================================================
- *  FONCTION : handle_request
- *  Point d'entrée pour le traitement de toutes les commandes.
- * ============================================================ */
+// FONCTION : handle_request
+// Point d'entrée pour le traitement de toutes les commandes.
 void handle_request(const char *request, char *response) {
     char commande[32];    
     char produit[32];   
