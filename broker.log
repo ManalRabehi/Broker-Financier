@@ -1,0 +1,25 @@
+[Sat Apr  4 18:11:31 2026] Broker demarrÃ© | Port: 12345 | 4 produits | Fonds: 100000.00$
+[Sat Apr  4 18:11:31 2026] En attente de connexions clients...
+[Sat Apr  4 18:12:29 2026] >> Nouveau client : 127.0.0.1:58802
+[Sat Apr  4 18:12:39 2026]    [127.0.0.1:58802] -> AIDE
+[Sat Apr  4 18:12:39 2026]    [127.0.0.1:58802] <- Commandes disponibles:
+  LISTE                 - lister tous les produits
+  INFO <PRODUIT>        - infos sur un produit
+  BUY  <PRODUIT> <QTY> - acheter QTY actions
+  SELL <PRODUIT> <QTY> - vendre QTY actions
+  AIDE                  - afficher ce menu
+  QUIT                  - se deconnecter
+[Sat Apr  4 18:12:54 2026]    [127.0.0.1:58802] -> 
+[Sat Apr  4 18:12:54 2026]    [127.0.0.1:58802] <- ERREUR: Commande '²å' inconnue. Tapez AIDE pour la liste des commandes.
+[Sat Apr  4 18:12:57 2026]    [127.0.0.1:58802] -> LISTE
+[Sat Apr  4 18:12:57 2026]    [127.0.0.1:58802] <- === ACTIONS DISPONIBLES ===
+  APPLE    | Prix:  150.00$ | Stock: 100 actions
+  TESLA    | Prix:  220.00$ | Stock: 80 actions
+  GOOGLE   | Prix:  130.00$ | Stock: 120 actions
+  AMAZON   | Prix:  175.00$ | Stock: 60 actions
+Fonds Broker: 100000.00$
+[Sat Apr  4 18:13:05 2026]    [127.0.0.1:58802] -> BUY APPLE
+[Sat Apr  4 18:13:05 2026]    [127.0.0.1:58802] <- ERREUR: Usage: BUY <PRODUIT> <QUANTITE>
+[Sat Apr  4 18:13:13 2026]    [127.0.0.1:58802] -> BUY APPLE 1
+[Sat Apr  4 18:13:13 2026]    [127.0.0.1:58802] <- ACHAT OK | 1 actions APPLE achetees pour 150.00$ (150.00$/action) | Nouveau prix: 150.00$ | Stock restant: 99
+[Sat Apr  4 18:13:39 2026] << Client 127.0.0.1:58802 deconnecte.
